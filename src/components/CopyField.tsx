@@ -21,8 +21,8 @@ export const CopyField = ({label, value, icon: Icon, onGenerate}: Props) => {
 
     return (
         <Card className="w-full">
-            <CardHeader className="flex gap-3">
-                {Icon && <Icon className="text-2xl" />}
+            <CardHeader className="flex gap-3 flex-row items-center">
+                <Icon className="text-2xl" />
                 <h3 className="text-lg font-semibold">{label}</h3>
             </CardHeader>
             <CardContent className="flex gap-3 items-center">

@@ -13,7 +13,7 @@ interface Props {
     onGenerate: () => void;
 }
 
-export const QRCodeField = React.memo<Props>(({label, value, icon: Icon, fileName, onGenerate: onGenerate}) => {
+export const QRCodeField = React.memo<Props>(({label, value, icon: Icon, fileName, onGenerate}) => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
 
     useEffect(() => {
@@ -34,11 +34,11 @@ export const QRCodeField = React.memo<Props>(({label, value, icon: Icon, fileNam
         if (!canvas) return;
 
         const link = document.createElement("a");
-        link.download = fileName || `${label.toLowerCase()}-qrcode.png`;
+        link.download = fileName;
         link.href = canvas.toDataURL("image/png");
         link.click();
         onGenerate();
-    }, [canvasRef, fileName, label, onGenerate]);
+    }, [canvasRef, fileName, onGenerate]);
 
     return (
         <Card className="w-full gap-0">

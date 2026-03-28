@@ -7,8 +7,8 @@ import QRCode from "qrcode";
 interface Props {
     label: string;
     value: string;
-    icon?: IconType;
-    fileName?: string;
+    icon: IconType;
+    fileName: string;
     onGenerate: () => void;
 }
 

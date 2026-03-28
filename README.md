@@ -2,6 +2,8 @@
 
 A small React app to copy withdrawal account details and export QR codes. Values are generated on load and can be regenerated per field.
 
+**Live demo:** [https://anthonylee1994.github.io/ub-withdrawal-helper/](https://anthonylee1994.github.io/ub-withdrawal-helper/)
+
 ## Features
 
 - **Copy fields** — Bank account, USDT, Digital RMB, and ToPay. Each row has a copy action on the input and a **Generate** button for a new random value.

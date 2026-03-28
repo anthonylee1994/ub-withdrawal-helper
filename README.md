@@ -6,21 +6,21 @@ A small React app to copy withdrawal account details and export QR codes. Values
 
 ## Features
 
-- **Copy fields** — Bank account, USDT, Digital RMB, and ToPay. Each row has a copy action on the input and a **Generate** button for a new random value.
+- **Copy fields** — Bank account, USDT (TRC-20), USDT (ERC-20), and Digital RMB / ToPay. Each row has a copy action on the input and a **Generate** button for a new random value.
 - **QR codes** — WeChat Pay (`wxp://…`) and Alipay (`https://qr.alipay.com/…`). **Generate** creates a new URL and refreshes the QR; **Download** saves the image as PNG.
 
 ## Generators (overview)
 
-| Field        | Behavior |
-| ------------ | -------- |
-| Bank account | Random card number from BIN config + Luhn check digit |
-| USDT         | Random TRC-20–style address |
-| Digital RMB  | Random 16-digit string |
-| ToPay        | Random 16-digit string |
-| WeChat       | `wxp://` + 30 random digits |
-| Alipay       | `https://qr.alipay.com/` + 24 random lowercase alphanumeric characters |
+| Field           | Behavior |
+| --------------- | -------- |
+| Bank account    | Random card number from BIN config + Luhn check digit |
+| USDT (TRC-20)   | Random `T`-prefixed Base58 address |
+| USDT (ERC-20)   | Random `0x`-prefixed 40-character hex address |
+| Digital RMB     | Random 16-digit string |
+| WeChat          | `wxp://` + 30 random digits |
+| Alipay          | `https://qr.alipay.com/` + 24 random lowercase alphanumeric characters |
 
-Generator code lives under `src/utils/generators/`.
+Generator code lives under `src/generators/`.
 
 ## Tech stack
 

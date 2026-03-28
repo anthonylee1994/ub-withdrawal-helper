@@ -1,4 +1,4 @@
-import {useEffect, useRef} from "react";
+import {useCallback, useEffect, useRef} from "react";
 import {type IconType} from "react-icons";
 import {Card, CardHeader, CardContent, Button, ButtonGroup} from "@heroui/react";
 import {MdDownload, MdRefresh} from "react-icons/md";
@@ -28,7 +28,7 @@ export const QRCodeField = ({label, value, icon: Icon, fileName, onGenerate: onG
         }
     }, [value]);
 
-    const download = () => {
+    const download = useCallback(() => {
         const canvas = canvasRef.current;
         if (!canvas) return;
 
@@ -37,7 +37,7 @@ export const QRCodeField = ({label, value, icon: Icon, fileName, onGenerate: onG
         link.href = canvas.toDataURL("image/png");
         link.click();
         onGenerate();
-    };
+    }, [canvasRef, fileName, label, onGenerate]);
 
     return (
         <Card className="w-full gap-0">

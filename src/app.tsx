@@ -1,16 +1,17 @@
-import {useState, useCallback} from "react";
+import React from "react";
 import {SiTether} from "react-icons/si";
-import {MdAccountBalance, MdCurrencyExchange, MdPayment} from "react-icons/md";
+import type {IconType} from "react-icons";
+import {useState, useCallback} from "react";
 import {FaWeixin, FaAlipay} from "react-icons/fa";
 import {CopyField} from "./components/CopyField";
 import {QRCodeField} from "./components/QRCodeField";
-import {generateBankCardNumber} from "./utils/generators/bankCard";
-import {generateUSDTAddress} from "./utils/generators/usdt";
-import {generateDigitalRMBNumber} from "./utils/generators/digitalRMB";
-import {generateToPayAddress} from "./utils/generators/toPay";
-import {generateAlipayQrUrl} from "./utils/generators/alipay";
-import {generateWeChatPayUrl} from "./utils/generators/wechat";
-import type {IconType} from "react-icons";
+import {generateUSDTAddress} from "./generators/usdt";
+import {generateToPayAddress} from "./generators/toPay";
+import {generateAlipayQrUrl} from "./generators/alipay";
+import {generateWeChatPayUrl} from "./generators/wechat";
+import {generateBankCardNumber} from "./generators/bankCard";
+import {generateDigitalRMBNumber} from "./generators/digitalRMB";
+import {MdAccountBalance, MdCurrencyExchange, MdPayment} from "react-icons/md";
 
 type MethodId = "bankAccount" | "usdt" | "digitalRmb" | "toPay" | "wechat" | "alipay";
 
@@ -74,7 +75,7 @@ const METHOD_CONFIG: Record<MethodId, MethodConfig> = {
 
 const INITIAL_VALUES = Object.fromEntries(Object.entries(METHOD_CONFIG).map(([id, config]) => [id, config.generate()])) as Record<MethodId, string>;
 
-export const App = () => {
+export const App = React.memo(() => {
     const [values, setValues] = useState<Record<MethodId, string>>(INITIAL_VALUES);
 
     const handleGenerate = useCallback((id: MethodId) => {
@@ -99,4 +100,4 @@ export const App = () => {
             </div>
         </div>
     );
-};
+});

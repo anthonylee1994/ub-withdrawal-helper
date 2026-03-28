@@ -1,7 +1,8 @@
+import React from "react";
+import type {IconType} from "react-icons";
 import {useCallback, useState} from "react";
-import {type IconType} from "react-icons";
-import {Card, CardHeader, CardContent, Button, InputGroup} from "@heroui/react";
 import {MdCheck, MdContentCopy, MdRefresh} from "react-icons/md";
+import {Card, CardHeader, CardContent, Button, InputGroup} from "@heroui/react";
 
 interface Props {
     label: string;
@@ -10,7 +11,7 @@ interface Props {
     onGenerate: () => void;
 }
 
-export const CopyField = ({label, value, icon: Icon, onGenerate}: Props) => {
+export const CopyField = React.memo<Props>(({label, value, icon: Icon, onGenerate}) => {
     const [copied, setCopied] = useState(false);
 
     const handleCopy = useCallback(async () => {
@@ -41,4 +42,4 @@ export const CopyField = ({label, value, icon: Icon, onGenerate}: Props) => {
             </CardContent>
         </Card>
     );
-};
+});

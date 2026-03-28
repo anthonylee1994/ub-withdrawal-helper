@@ -1,8 +1,9 @@
-import {useCallback, useEffect, useRef} from "react";
-import {type IconType} from "react-icons";
-import {Card, CardHeader, CardContent, Button, ButtonGroup} from "@heroui/react";
-import {MdDownload, MdRefresh} from "react-icons/md";
+import React from "react";
 import QRCode from "qrcode";
+import type {IconType} from "react-icons";
+import {useCallback, useEffect, useRef} from "react";
+import {MdDownload, MdRefresh} from "react-icons/md";
+import {Card, CardHeader, CardContent, Button, ButtonGroup} from "@heroui/react";
 
 interface Props {
     label: string;
@@ -12,7 +13,7 @@ interface Props {
     onGenerate: () => void;
 }
 
-export const QRCodeField = ({label, value, icon: Icon, fileName, onGenerate: onGenerate}: Props) => {
+export const QRCodeField = React.memo<Props>(({label, value, icon: Icon, fileName, onGenerate: onGenerate}) => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
 
     useEffect(() => {
@@ -62,4 +63,4 @@ export const QRCodeField = ({label, value, icon: Icon, fileName, onGenerate: onG
             </CardContent>
         </Card>
     );
-};
+});

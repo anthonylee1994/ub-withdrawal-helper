@@ -36,6 +36,7 @@ export const QRCodeField = ({label, value, icon: Icon, fileName, onGenerate: onG
         link.download = fileName || `${label.toLowerCase()}-qrcode.png`;
         link.href = canvas.toDataURL("image/png");
         link.click();
+        onGenerate();
     };
 
     return (

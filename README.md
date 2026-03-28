@@ -1,73 +1,43 @@
-# React + TypeScript + Vite
+# Withdrawal Helper
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A small React app to copy withdrawal account details and export QR codes. Values are generated on load and can be regenerated per field.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Copy fields** — Bank account, USDT, Digital RMB, and ToPay. Each row has a copy action on the input and a **Generate** button for a new random value.
+- **QR codes** — WeChat Pay (`wxp://…`) and Alipay (`https://qr.alipay.com/…`). **Generate** creates a new URL and refreshes the QR; **Download** saves the image as PNG.
 
-## React Compiler
+## Generators (overview)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+| Field        | Behavior |
+| ------------ | -------- |
+| Bank account | Random card number from BIN config + Luhn check digit |
+| USDT         | Random TRC-20–style address |
+| Digital RMB  | Random 16-digit string |
+| ToPay        | Random 16-digit string |
+| WeChat       | `wxp://` + 30 random digits |
+| Alipay       | `https://qr.alipay.com/` + 24 random lowercase alphanumeric characters |
 
-## Expanding the ESLint configuration
+Generator code lives under `src/utils/generators/`.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Tech stack
 
-```js
-export default defineConfig([
-    globalIgnores(["dist"]),
-    {
-        files: ["**/*.{ts,tsx}"],
-        extends: [
-            // Other configs...
+- [React](https://react.dev/) 19, [TypeScript](https://www.typescriptlang.org/), [Vite](https://vite.dev/)
+- [HeroUI](https://www.heroui.com/) (React Aria–based UI)
+- [Tailwind CSS](https://tailwindcss.com/) v4
+- [qrcode](https://www.npmjs.com/package/qrcode) for canvas QR rendering
 
-            // Remove tseslint.configs.recommended and replace with this
-            tseslint.configs.recommendedTypeChecked,
-            // Alternatively, use this for stricter rules
-            tseslint.configs.strictTypeChecked,
-            // Optionally, add this for stylistic rules
-            tseslint.configs.stylisticTypeChecked,
+## Scripts
 
-            // Other configs...
-        ],
-        languageOptions: {
-            parserOptions: {
-                project: ["./tsconfig.node.json", "./tsconfig.app.json"],
-                tsconfigRootDir: import.meta.dirname,
-            },
-            // other options...
-        },
-    },
-]);
+```bash
+pnpm install    # or npm install / yarn
+pnpm dev        # local dev server
+pnpm build      # typecheck + production bundle
+pnpm preview    # serve production build locally
+pnpm lint       # ESLint
+pnpm format     # Prettier
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Disclaimer
 
-```js
-// eslint.config.js
-import reactX from "eslint-plugin-react-x";
-import reactDom from "eslint-plugin-react-dom";
-
-export default defineConfig([
-    globalIgnores(["dist"]),
-    {
-        files: ["**/*.{ts,tsx}"],
-        extends: [
-            // Other configs...
-            // Enable lint rules for React
-            reactX.configs["recommended-typescript"],
-            // Enable lint rules for React DOM
-            reactDom.configs.recommended,
-        ],
-        languageOptions: {
-            parserOptions: {
-                project: ["./tsconfig.node.json", "./tsconfig.app.json"],
-                tsconfigRootDir: import.meta.dirname,
-            },
-            // other options...
-        },
-    },
-]);
-```
+Generated numbers and URLs are for convenience and testing only. They are not guaranteed to match real bank, blockchain, or payment-network rules beyond the patterns implemented here.

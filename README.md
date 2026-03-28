@@ -11,14 +11,14 @@ A small React app to copy withdrawal account details and export QR codes. Values
 
 ## Generators (overview)
 
-| Field           | Behavior |
-| --------------- | -------- |
-| Bank account    | Random card number from BIN config + Luhn check digit |
-| USDT (TRC-20)   | Random `T`-prefixed Base58 address |
-| USDT (ERC-20)   | Random `0x`-prefixed 40-character hex address |
-| Digital RMB     | Random 16-digit string |
-| WeChat          | `wxp://` + 30 random digits |
-| Alipay          | `https://qr.alipay.com/` + 24 random lowercase alphanumeric characters |
+| Field               | Behavior                                                               |
+| ------------------- | ---------------------------------------------------------------------- |
+| Bank account        | Random card number from BIN config + Luhn check digit                  |
+| USDT (TRC-20)       | Random `T`-prefixed Base58 address                                     |
+| USDT (ERC-20)       | Random `0x`-prefixed 40-character hex address                          |
+| Digital RMB / ToPay | Random 16-digit string                                                 |
+| WeChat              | `wxp://` + 30 random digits                                            |
+| Alipay              | `https://qr.alipay.com/` + 24 random lowercase alphanumeric characters |
 
 Generator code lives under `src/generators/`.
 

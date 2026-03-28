@@ -1,7 +1,7 @@
 import {useCallback, useState} from "react";
 import {type IconType} from "react-icons";
 import {Card, CardHeader, CardContent, Button, InputGroup} from "@heroui/react";
-import {MdCheck, MdContentCopy} from "react-icons/md";
+import {MdCheck, MdContentCopy, MdRefresh} from "react-icons/md";
 
 interface Props {
     label: string;
@@ -34,7 +34,8 @@ export const CopyField = ({label, value, icon: Icon, onGenerate}: Props) => {
                         </Button>
                     </InputGroup.Suffix>
                 </InputGroup>
-                <Button variant="primary" onPress={onGenerate} style={{minWidth: "6rem"}}>
+                <Button variant="outline" onPress={onGenerate} style={{minWidth: "6rem"}}>
+                    <MdRefresh className="w-4 h-4" />
                     Generate
                 </Button>
             </CardContent>

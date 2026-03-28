@@ -82,7 +82,7 @@ export const App = () => {
 
     return (
         <div className="min-h-screen bg-linear-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
-            <div className="max-w-3xl mx-auto px-4 py-10">
+            <div className="max-w-4xl mx-auto px-4 py-10">
                 <h1 className="text-3xl font-bold text-center mb-2 text-slate-800 dark:text-slate-100">Withdrawal Helper</h1>
                 <p className="text-center text-slate-500 dark:text-slate-400 mb-8">Copy account details or download QR codes for withdrawals</p>
 

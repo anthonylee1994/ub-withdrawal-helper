@@ -5,15 +5,15 @@ import {useState, useCallback} from "react";
 import {FaWeixin, FaAlipay} from "react-icons/fa";
 import {CopyField} from "./components/CopyField";
 import {QRCodeField} from "./components/QRCodeField";
-import {generateUSDTAddress} from "./generators/usdt";
-import {generateToPayAddress} from "./generators/toPay";
+import {generateTRC20Address} from "./generators/trc20";
+import {generateERC20Address} from "./generators/erc20";
 import {generateAlipayQrUrl} from "./generators/alipay";
 import {generateWeChatPayUrl} from "./generators/wechat";
 import {generateBankCardNumber} from "./generators/bankCard";
-import {generateDigitalRMBNumber} from "./generators/digitalRMB";
-import {MdAccountBalance, MdCurrencyExchange, MdPayment} from "react-icons/md";
+import {generateDigitalRMBAndToPayNumber} from "./generators/digitalRMBAndToPay";
+import {MdAccountBalance, MdCurrencyExchange} from "react-icons/md";
 
-type MethodId = "bankAccount" | "usdt" | "digitalRmb" | "toPay" | "wechat" | "alipay";
+type MethodId = "bankAccount" | "trc20" | "erc20" | "digitalRmbAndToPay" | "wechat" | "alipay";
 
 type CopyMethodConfig = {
     type: "copy";
@@ -39,23 +39,23 @@ const METHOD_CONFIG: Record<MethodId, MethodConfig> = {
         icon: MdAccountBalance,
         generate: generateBankCardNumber,
     },
-    usdt: {
+    digitalRmbAndToPay: {
         type: "copy",
-        label: "USDT",
-        icon: SiTether,
-        generate: generateUSDTAddress,
-    },
-    digitalRmb: {
-        type: "copy",
-        label: "Digital RMB",
+        label: "Digital RMB / ToPay",
         icon: MdCurrencyExchange,
-        generate: generateDigitalRMBNumber,
+        generate: generateDigitalRMBAndToPayNumber,
     },
-    toPay: {
+    trc20: {
         type: "copy",
-        label: "ToPay",
-        icon: MdPayment,
-        generate: generateToPayAddress,
+        label: "USDT (TRC-20)",
+        icon: SiTether,
+        generate: generateTRC20Address,
+    },
+    erc20: {
+        type: "copy",
+        label: "USDT (ERC-20)",
+        icon: SiTether,
+        generate: generateERC20Address,
     },
     wechat: {
         type: "qr",
@@ -84,7 +84,7 @@ export const App = React.memo(() => {
 
     return (
         <div className="min-h-screen bg-linear-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
-            <div className="max-w-4xl mx-auto px-4 py-10">
+            <div className="max-w-5xl mx-auto px-4 py-10">
                 <h1 className="text-3xl font-bold text-center mb-2 text-slate-800 dark:text-slate-100">Withdrawal Helper</h1>
                 <p className="text-center text-slate-500 dark:text-slate-400 mb-8">Copy account details or download QR codes for withdrawals</p>
 

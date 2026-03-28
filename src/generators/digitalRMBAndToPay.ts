@@ -1,3 +1,3 @@
-export function generateDigitalRMBNumber(): string {
+export function generateDigitalRMBAndToPayNumber(): string {
     return Array.from({length: 16}, () => Math.floor(Math.random() * 10)).join("");
 }

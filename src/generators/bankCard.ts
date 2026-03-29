@@ -28,7 +28,7 @@ export function getVerificationCode(bankcard: string): number {
                     .reduce((a, c) => +a + +c, 0),
             0
         );
-    return 10 - ((oddSum + evenSum) % 10 || 10);
+    return (10 - ((oddSum + evenSum) % 10)) % 10;
 }
 
 function randomInt(max: number): number {

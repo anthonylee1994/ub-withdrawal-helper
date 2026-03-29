@@ -39,7 +39,7 @@ export const QRCodeField = React.memo<Props>(({label, value, icon, fileName, onG
         link.href = canvas.toDataURL("image/png");
         link.click();
         onGenerate();
-    }, [canvasRef, fileName, onGenerate]);
+    }, [fileName, onGenerate]);
 
     return (
         <MethodCard label={label} icon={icon} className="gap-0">

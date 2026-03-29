@@ -14,7 +14,7 @@ function getTypeLabel(type: BankConfigRow[4]): string {
     return String(type);
 }
 
-export function getVerificationCode(bankcard: string): number {
+function getVerificationCode(bankcard: string): number {
     const reverseCardArr = bankcard.split("").reverse();
     const evenSum = reverseCardArr.filter((_, i) => i % 2 === 1).reduce((c, r) => +c + +r, 0);
     const oddSum = reverseCardArr

@@ -1,6 +1,6 @@
 import React from "react";
 import type {IconType} from "react-icons";
-import {useCallback, useState} from "react";
+import {useCallback, useEffect, useRef, useState} from "react";
 import {MdCheck, MdContentCopy, MdRefresh} from "react-icons/md";
 import {CardContent, Button, InputGroup} from "@heroui/react";
 import {MethodCard} from "./MethodCard";
@@ -14,11 +14,23 @@ interface Props {
 
 export const CopyField = React.memo<Props>(({label, value, icon, onGenerate}) => {
     const [copied, setCopied] = useState(false);
+    const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+    useEffect(() => {
+        return () => {
+            if (timeoutRef.current) {
+                clearTimeout(timeoutRef.current);
+            }
+        };
+    }, []);
 
     const handleCopy = useCallback(async () => {
         await navigator.clipboard.writeText(value);
         setCopied(true);
-        setTimeout(() => setCopied(false), 2000);
+        if (timeoutRef.current) {
+            clearTimeout(timeoutRef.current);
+        }
+        timeoutRef.current = setTimeout(() => setCopied(false), 2000);
     }, [value]);
 
     return (

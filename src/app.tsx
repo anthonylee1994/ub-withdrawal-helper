@@ -74,7 +74,7 @@ const METHOD_CONFIG: Record<MethodId, MethodConfig> = {
     },
 };
 
-const METHOD_IDS = Object.keys(METHOD_CONFIG) as MethodId[];
+const METHOD_IDS = Object.freeze(Object.keys(METHOD_CONFIG)) as readonly MethodId[];
 
 function generateAllValues(): Record<MethodId, string> {
     return Object.fromEntries(METHOD_IDS.map(id => [id, METHOD_CONFIG[id].generate()])) as Record<MethodId, string>;

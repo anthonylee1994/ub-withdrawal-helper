@@ -2,7 +2,8 @@ import React from "react";
 import type {IconType} from "react-icons";
 import {useCallback, useState} from "react";
 import {MdCheck, MdContentCopy, MdRefresh} from "react-icons/md";
-import {Card, CardHeader, CardContent, Button, InputGroup} from "@heroui/react";
+import {CardContent, Button, InputGroup} from "@heroui/react";
+import {MethodCard} from "./MethodCard";
 
 interface Props {
     label: string;
@@ -11,7 +12,7 @@ interface Props {
     onGenerate: () => void;
 }
 
-export const CopyField = React.memo<Props>(({label, value, icon: Icon, onGenerate}) => {
+export const CopyField = React.memo<Props>(({label, value, icon, onGenerate}) => {
     const [copied, setCopied] = useState(false);
 
     const handleCopy = useCallback(async () => {
@@ -21,11 +22,7 @@ export const CopyField = React.memo<Props>(({label, value, icon: Icon, onGenerat
     }, [value]);
 
     return (
-        <Card className="w-full">
-            <CardHeader className="flex gap-3 flex-row items-center">
-                <Icon className="text-2xl" />
-                <h3 className="text-lg font-semibold">{label}</h3>
-            </CardHeader>
+        <MethodCard label={label} icon={icon}>
             <CardContent className="flex gap-3 items-center">
                 <InputGroup variant="secondary" className="w-full rounded-full">
                     <InputGroup.Input readOnly value={value} />
@@ -40,6 +37,6 @@ export const CopyField = React.memo<Props>(({label, value, icon: Icon, onGenerat
                     Regenerate
                 </Button>
             </CardContent>
-        </Card>
+        </MethodCard>
     );
 });

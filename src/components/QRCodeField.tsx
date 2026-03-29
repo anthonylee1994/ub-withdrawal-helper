@@ -3,7 +3,8 @@ import QRCode from "qrcode";
 import type {IconType} from "react-icons";
 import {useCallback, useEffect, useRef} from "react";
 import {MdDownload, MdRefresh} from "react-icons/md";
-import {Card, CardHeader, CardContent, Button, ButtonGroup} from "@heroui/react";
+import {CardContent, Button, ButtonGroup} from "@heroui/react";
+import {MethodCard} from "./MethodCard";
 
 interface Props {
     label: string;
@@ -13,7 +14,7 @@ interface Props {
     onGenerate: () => void;
 }
 
-export const QRCodeField = React.memo<Props>(({label, value, icon: Icon, fileName, onGenerate}) => {
+export const QRCodeField = React.memo<Props>(({label, value, icon, fileName, onGenerate}) => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
 
     useEffect(() => {
@@ -41,11 +42,7 @@ export const QRCodeField = React.memo<Props>(({label, value, icon: Icon, fileNam
     }, [canvasRef, fileName, onGenerate]);
 
     return (
-        <Card className="w-full gap-0">
-            <CardHeader className="flex gap-3 flex-row items-center">
-                <Icon className="text-2xl" />
-                <h3 className="text-lg font-semibold">{label}</h3>
-            </CardHeader>
+        <MethodCard label={label} icon={icon} className="gap-0">
             <CardContent className="flex flex-col items-center gap-4">
                 <canvas ref={canvasRef} />
                 <div className="flex flex-wrap gap-2 justify-center">
@@ -61,6 +58,6 @@ export const QRCodeField = React.memo<Props>(({label, value, icon: Icon, fileNam
                     </ButtonGroup>
                 </div>
             </CardContent>
-        </Card>
+        </MethodCard>
     );
 });

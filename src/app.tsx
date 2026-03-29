@@ -8,7 +8,7 @@ import {QRCodeField} from "./components/QRCodeField";
 import {generateTRC20Address} from "./generators/trc20";
 import {generateERC20Address} from "./generators/erc20";
 import {generateAlipayQrUrl} from "./generators/alipay";
-import {generateWeChatPayUrl} from "./generators/wechat";
+import {generateWeChatQrUrl} from "./generators/wechat";
 import {generateBankCardNumber} from "./generators/bankCard";
 import {generateDigitalRMBAndToPayNumber} from "./generators/digitalRMBAndToPay";
 import {MdAccountBalance, MdCurrencyExchange, MdRefresh} from "react-icons/md";
@@ -63,7 +63,7 @@ const METHOD_CONFIG: Record<MethodId, MethodConfig> = {
         label: "WeChat",
         icon: FaWeixin,
         fileName: "wechat-qrcode.png",
-        generate: generateWeChatPayUrl,
+        generate: generateWeChatQrUrl,
     },
     alipay: {
         type: "qr",
@@ -74,19 +74,21 @@ const METHOD_CONFIG: Record<MethodId, MethodConfig> = {
     },
 };
 
-const INITIAL_VALUES = Object.fromEntries(Object.entries(METHOD_CONFIG).map(([id, config]) => [id, config.generate()])) as Record<MethodId, string>;
+const METHOD_IDS = Object.keys(METHOD_CONFIG) as MethodId[];
+
+function generateAllValues(): Record<MethodId, string> {
+    return Object.fromEntries(METHOD_IDS.map(id => [id, METHOD_CONFIG[id].generate()])) as Record<MethodId, string>;
+}
 
 export const App = React.memo(() => {
-    const [values, setValues] = useState<Record<MethodId, string>>(INITIAL_VALUES);
+    const [values, setValues] = useState<Record<MethodId, string>>(generateAllValues);
 
     const handleGenerate = useCallback((id: MethodId) => {
         setValues(prev => ({...prev, [id]: METHOD_CONFIG[id].generate()}));
     }, []);
 
     const handleGenerateAll = useCallback(() => {
-        setValues(
-            Object.fromEntries(Object.entries(METHOD_CONFIG).map(([id, config]) => [id, config.generate()])) as Record<MethodId, string>
-        );
+        setValues(generateAllValues());
     }, []);
 
     return (
@@ -102,13 +104,14 @@ export const App = React.memo(() => {
                 </div>
 
                 <div className="grid sm:grid-cols-2 gap-4">
-                    {Object.entries(METHOD_CONFIG).map(([id, config]) =>
-                        config.type === "copy" ? (
-                            <CopyField key={id} label={config.label} value={values[id as MethodId]} icon={config.icon} onGenerate={() => handleGenerate(id as MethodId)} />
+                    {METHOD_IDS.map(id => {
+                        const config = METHOD_CONFIG[id];
+                        return config.type === "copy" ? (
+                            <CopyField key={id} label={config.label} value={values[id]} icon={config.icon} onGenerate={() => handleGenerate(id)} />
                         ) : (
-                            <QRCodeField key={id} label={config.label} value={values[id as MethodId]} icon={config.icon} fileName={config.fileName} onGenerate={() => handleGenerate(id as MethodId)} />
-                        )
-                    )}
+                            <QRCodeField key={id} label={config.label} value={values[id]} icon={config.icon} fileName={config.fileName} onGenerate={() => handleGenerate(id)} />
+                        );
+                    })}
                 </div>
             </div>
         </div>

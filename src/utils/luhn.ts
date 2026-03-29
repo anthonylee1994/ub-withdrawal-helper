@@ -1,18 +1,19 @@
 export function getLuhnCheckDigit(number: string): number {
-    const reversed = number.split("").reverse();
-    const evenSum = reversed.filter((_, i) => i % 2 === 1).reduce((sum, digit) => sum + Number(digit), 0);
+    let sum = 0;
+    let double = true;
 
-    const oddSum = reversed
-        .filter((_, i) => i % 2 === 0)
-        .map(digit => Number(digit) * 2)
-        .reduce((sum, value) => {
-            return (
-                sum +
-                String(value)
-                    .split("")
-                    .reduce((innerSum, d) => innerSum + Number(d), 0)
-            );
-        }, 0);
+    // Single pass Luhn calculation from right to left
+    for (let i = number.length - 1; i >= 0; i--) {
+        let digit = Number(number[i]);
 
-    return (10 - ((oddSum + evenSum) % 10)) % 10;
+        if (double) {
+            digit *= 2;
+            if (digit > 9) digit -= 9;
+        }
+
+        sum += digit;
+        double = !double;
+    }
+
+    return (10 - (sum % 10)) % 10;
 }

@@ -5,6 +5,12 @@ function randomInt(max: number): number {
     return Math.floor(Math.random() * max);
 }
 
+// Precompute filtered pools once at module load time
+const BANK_POOLS: Record<number, BankConfigRow[]> = {};
+for (let type = 1; type <= 4; type++) {
+    BANK_POOLS[type] = BANK_CONFIG.filter(c => c[4] === type);
+}
+
 function buildCardFromBinRow(bankInfo: BankConfigRow): string | null {
     const prefix = bankInfo[0];
     const totalLen = Number(bankInfo[3]);
@@ -19,7 +25,7 @@ function buildCardFromBinRow(bankInfo: BankConfigRow): string | null {
 
 export function generateBankCardNumber(): string {
     const type = 1 + randomInt(4);
-    const pool = BANK_CONFIG.filter(c => c[4] === type);
+    const pool = BANK_POOLS[type];
     const banks = pool.length > 0 ? pool : BANK_CONFIG;
     let bankInfo = banks[randomInt(banks.length)]!;
     let cardNo = buildCardFromBinRow(bankInfo);

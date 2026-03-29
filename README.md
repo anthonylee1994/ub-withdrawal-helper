@@ -28,6 +28,7 @@ Generator code lives under `src/generators/`.
 - [HeroUI](https://www.heroui.com/) (React Aria–based UI)
 - [Tailwind CSS](https://tailwindcss.com/) v4
 - [qrcode](https://www.npmjs.com/package/qrcode) for canvas QR rendering
+- [react-icons](https://react-icons.github.io/react-icons/) for iconography
 
 ## Scripts
 

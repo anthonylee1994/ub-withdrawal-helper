@@ -1,21 +1,5 @@
 import {BANK_CONFIG, type BankConfigRow} from "./bankConfigData";
-
-function getVerificationCode(bankcard: string): number {
-    const reverseCardArr = bankcard.split("").reverse();
-    const evenSum = reverseCardArr.filter((_, i) => i % 2 === 1).reduce((c, r) => +c + +r, 0);
-    const oddSum = reverseCardArr
-        .filter((_, i) => i % 2 === 0)
-        .map(r => +r * 2)
-        .reduce(
-            (accumulator, currentValue) =>
-                accumulator +
-                String(currentValue)
-                    .split("")
-                    .reduce((a, c) => +a + +c, 0),
-            0
-        );
-    return (10 - ((oddSum + evenSum) % 10)) % 10;
-}
+import {getLuhnCheckDigit} from "../utils/luhn";
 
 function randomInt(max: number): number {
     return Math.floor(Math.random() * max);
@@ -29,7 +13,7 @@ function buildCardFromBinRow(bankInfo: BankConfigRow): string | null {
     if (randomLen < 0) return null;
     const middle = Array.from({length: randomLen}, () => randomInt(10)).join("");
     let cardNo = prefix + middle;
-    cardNo = cardNo + getVerificationCode(cardNo);
+    cardNo = cardNo + getLuhnCheckDigit(cardNo);
     return cardNo;
 }
 

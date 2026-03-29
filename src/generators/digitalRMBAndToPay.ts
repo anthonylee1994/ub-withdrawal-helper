@@ -1,3 +1,7 @@
+import {generateRandomString} from "../utils/random";
+
+const NUMBERS = "0123456789";
+
 export function generateDigitalRMBAndToPayNumber(): string {
-    return Array.from({length: 16}, () => Math.floor(Math.random() * 10)).join("");
+    return generateRandomString(16, NUMBERS);
 }

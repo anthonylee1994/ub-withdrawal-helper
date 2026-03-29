@@ -1,6 +1,5 @@
 import {BANK_CONFIG, type BankConfigRow} from "./bankConfigData";
 
-
 function getVerificationCode(bankcard: string): number {
     const reverseCardArr = bankcard.split("").reverse();
     const evenSum = reverseCardArr.filter((_, i) => i % 2 === 1).reduce((c, r) => +c + +r, 0);

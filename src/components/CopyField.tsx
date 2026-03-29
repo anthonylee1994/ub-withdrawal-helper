@@ -37,7 +37,7 @@ export const CopyField = React.memo<Props>(({label, value, icon: Icon, onGenerat
                 </InputGroup>
                 <Button variant="outline" onPress={onGenerate} style={{minWidth: "6rem"}}>
                     <MdRefresh className="w-4 h-4" />
-                    Generate
+                    Regenerate
                 </Button>
             </CardContent>
         </Card>

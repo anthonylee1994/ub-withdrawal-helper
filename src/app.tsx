@@ -11,7 +11,8 @@ import {generateAlipayQrUrl} from "./generators/alipay";
 import {generateWeChatPayUrl} from "./generators/wechat";
 import {generateBankCardNumber} from "./generators/bankCard";
 import {generateDigitalRMBAndToPayNumber} from "./generators/digitalRMBAndToPay";
-import {MdAccountBalance, MdCurrencyExchange} from "react-icons/md";
+import {MdAccountBalance, MdCurrencyExchange, MdRefresh} from "react-icons/md";
+import {Button} from "@heroui/react";
 
 type MethodId = "bankAccount" | "trc20" | "erc20" | "digitalRmbAndToPay" | "wechat" | "alipay";
 
@@ -82,11 +83,23 @@ export const App = React.memo(() => {
         setValues(prev => ({...prev, [id]: METHOD_CONFIG[id].generate()}));
     }, []);
 
+    const handleGenerateAll = useCallback(() => {
+        setValues(
+            Object.fromEntries(Object.entries(METHOD_CONFIG).map(([id, config]) => [id, config.generate()])) as Record<MethodId, string>
+        );
+    }, []);
+
     return (
         <div className="min-h-screen bg-linear-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
             <div className="max-w-5xl mx-auto px-4 py-10">
                 <h1 className="text-3xl font-bold text-center mb-2 text-slate-800 dark:text-slate-100">Withdrawal Helper</h1>
-                <p className="text-center text-slate-500 dark:text-slate-400 mb-8">Copy account details or download QR codes for withdrawals</p>
+                <p className="text-center text-slate-500 dark:text-slate-400 mb-4">Copy account details or download QR codes for withdrawals</p>
+                <div className="flex justify-center mb-8">
+                    <Button variant="outline" onPress={handleGenerateAll}>
+                        <MdRefresh className="w-4 h-4" />
+                        Regenerate all
+                    </Button>
+                </div>
 
                 <div className="grid sm:grid-cols-2 gap-4">
                     {Object.entries(METHOD_CONFIG).map(([id, config]) =>

@@ -52,7 +52,7 @@ export const QRCodeField = React.memo<Props>(({label, value, icon: Icon, fileNam
                     <ButtonGroup>
                         <Button variant="outline" onPress={onGenerate} style={{minWidth: "6rem"}}>
                             <MdRefresh className="w-4 h-4" />
-                            <span className="ml-1">Generate</span>
+                            <span className="ml-1">Regenerate</span>
                         </Button>
                         <Button variant="primary" onPress={download} style={{minWidth: "6rem"}}>
                             <MdDownload className="w-4 h-4" />

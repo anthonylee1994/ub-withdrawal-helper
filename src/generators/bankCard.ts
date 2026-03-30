@@ -1,5 +1,6 @@
-import {BANK_CONFIG, type BankConfigRow} from "./bankConfigData";
+import {BANK_CONFIG} from "./bankConfigData";
 import {getLuhnCheckDigit} from "../utils/luhn";
+import type {BankConfigRow} from "../types/generators";
 
 function randomInt(max: number): number {
     return Math.floor(Math.random() * max);
@@ -8,7 +9,7 @@ function randomInt(max: number): number {
 // Precompute filtered pools once at module load time
 const BANK_POOLS: Record<number, BankConfigRow[]> = {};
 for (let type = 1; type <= 4; type++) {
-    BANK_POOLS[type] = BANK_CONFIG.filter(c => c[4] === type);
+    BANK_POOLS[type] = BANK_CONFIG.filter((c: BankConfigRow) => c[4] === type);
 }
 
 function buildCardFromBinRow(bankInfo: BankConfigRow): string | null {
@@ -36,7 +37,7 @@ export function generateBankCardNumber(): string {
         guard++;
     }
     if (!cardNo) {
-        const fallback = BANK_CONFIG.find(r => buildCardFromBinRow(r) !== null);
+        const fallback = BANK_CONFIG.find((r: BankConfigRow) => buildCardFromBinRow(r) !== null);
         cardNo = buildCardFromBinRow(fallback ?? BANK_CONFIG[0]!);
     }
     return cardNo!;

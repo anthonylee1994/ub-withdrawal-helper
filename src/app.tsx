@@ -1,6 +1,5 @@
 import React from "react";
 import {SiTether} from "react-icons/si";
-import type {IconType} from "react-icons";
 import {useState, useCallback} from "react";
 import {FaWeixin, FaAlipay} from "react-icons/fa";
 import {CopyField} from "./components/CopyField";
@@ -13,25 +12,7 @@ import {generateBankCardNumber} from "./generators/bankCard";
 import {generateDigitalRMBAndToPayNumber} from "./generators/digitalRMBAndToPay";
 import {MdAccountBalance, MdCurrencyExchange, MdRefresh} from "react-icons/md";
 import {Button} from "@heroui/react";
-
-type MethodId = "bankAccount" | "trc20" | "erc20" | "digitalRmbAndToPay" | "wechat" | "alipay";
-
-type CopyMethodConfig = {
-    type: "copy";
-    label: string;
-    icon: IconType;
-    generate: () => string;
-};
-
-type QRMethodConfig = {
-    type: "qr";
-    label: string;
-    icon: IconType;
-    fileName: string;
-    generate: () => string;
-};
-
-type MethodConfig = CopyMethodConfig | QRMethodConfig;
+import type {MethodId, MethodConfig} from "./types/generators";
 
 const METHOD_CONFIG: Record<MethodId, MethodConfig> = {
     bankAccount: {

@@ -1,4 +1,4 @@
-import {generateRandomString} from "../utils/random";
+import {generateRandomString} from "@/utils/random";
 
 const BASE58 = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
 

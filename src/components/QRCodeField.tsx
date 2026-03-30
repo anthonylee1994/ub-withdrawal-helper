@@ -4,7 +4,7 @@ import type {IconType} from "react-icons";
 import {useCallback, useEffect, useRef} from "react";
 import {MdDownload, MdRefresh} from "react-icons/md";
 import {CardContent, Button, ButtonGroup} from "@heroui/react";
-import {MethodCard} from "./MethodCard";
+import {MethodCard} from "@/components/MethodCard";
 
 interface Props {
     label: string;

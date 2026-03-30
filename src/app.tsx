@@ -2,17 +2,17 @@ import React from "react";
 import {SiTether} from "react-icons/si";
 import {useState, useCallback} from "react";
 import {FaWeixin, FaAlipay} from "react-icons/fa";
-import {CopyField} from "./components/CopyField";
-import {QRCodeField} from "./components/QRCodeField";
-import {generateTRC20Address} from "./generators/trc20";
-import {generateERC20Address} from "./generators/erc20";
-import {generateAlipayQrUrl} from "./generators/alipay";
-import {generateWeChatQrUrl} from "./generators/wechat";
-import {generateBankCardNumber} from "./generators/bankCard";
-import {generateDigitalRMBAndToPayNumber} from "./generators/digitalRMBAndToPay";
+import {CopyField} from "@/components/CopyField";
+import {QRCodeField} from "@/components/QRCodeField";
+import {generateTRC20Address} from "@/generators/trc20";
+import {generateERC20Address} from "@/generators/erc20";
+import {generateAlipayQrUrl} from "@/generators/alipay";
+import {generateWeChatQrUrl} from "@/generators/wechat";
+import {generateBankCardNumber} from "@/generators/bankCard";
+import {generateDigitalRMBAndToPayNumber} from "@/generators/digitalRMBAndToPay";
 import {MdAccountBalance, MdCurrencyExchange, MdRefresh} from "react-icons/md";
 import {Button} from "@heroui/react";
-import type {MethodId, MethodConfig} from "./types/generators";
+import type {MethodId, MethodConfig} from "@/types/generators";
 
 const METHOD_CONFIG: Record<MethodId, MethodConfig> = {
     bankAccount: {

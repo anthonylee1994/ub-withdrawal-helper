@@ -1,4 +1,4 @@
-import {generateRandomString} from "../utils/random";
+import {generateRandomString} from "@/utils/random";
 
 const NUMBERS = "0123456789";
 

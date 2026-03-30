@@ -1,6 +1,6 @@
-import {BANK_CONFIG} from "./bankConfigData";
-import {getLuhnCheckDigit} from "../utils/luhn";
-import type {BankConfigRow} from "../types/generators";
+import {BANK_CONFIG} from "@/generators/bankConfigData";
+import {getLuhnCheckDigit} from "@/utils/luhn";
+import type {BankConfigRow} from "@/types/generators";
 
 function randomInt(max: number): number {
     return Math.floor(Math.random() * max);

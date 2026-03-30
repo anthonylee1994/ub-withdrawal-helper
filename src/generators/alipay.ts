@@ -1,4 +1,4 @@
-import {generateRandomString} from "../utils/random";
+import {generateRandomString} from "@/utils/random";
 
 const SEGMENT_LEN = 24;
 const CHARSET = "0123456789abcdefghijklmnopqrstuvwxyz";

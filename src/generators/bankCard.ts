@@ -1,6 +1,8 @@
 import {BANK_CONFIG} from "@/generators/bankConfigData";
 import {getLuhnCheckDigit} from "@/utils/luhn";
-import type {BankConfigRow} from "@/types/generators";
+import type {BankConfigRow} from "@/generators/bankConfigData";
+
+const MAX_RETRY_ATTEMPTS = 100;
 
 function randomInt(max: number): number {
     return Math.floor(Math.random() * max);
@@ -31,14 +33,14 @@ export function generateBankCardNumber(): string {
     let bankInfo = banks[randomInt(banks.length)]!;
     let cardNo = buildCardFromBinRow(bankInfo);
     let guard = 0;
-    while (!cardNo && guard < 100) {
+    while (!cardNo && guard < MAX_RETRY_ATTEMPTS) {
         bankInfo = banks[randomInt(banks.length)]!;
         cardNo = buildCardFromBinRow(bankInfo);
         guard++;
     }
     if (!cardNo) {
-        const fallback = BANK_CONFIG.find((r: BankConfigRow) => buildCardFromBinRow(r) !== null);
-        cardNo = buildCardFromBinRow(fallback ?? BANK_CONFIG[0]!);
+        const fallback = BANK_CONFIG.find((r: BankConfigRow) => buildCardFromBinRow(r) !== null) ?? BANK_CONFIG[0]!;
+        cardNo = buildCardFromBinRow(fallback);
     }
     return cardNo!;
 }

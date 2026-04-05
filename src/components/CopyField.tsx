@@ -1,6 +1,5 @@
-import React from "react";
+import {memo, useCallback, useEffect, useRef, useState} from "react";
 import type {IconType} from "react-icons";
-import {useCallback, useEffect, useRef, useState} from "react";
 import {MdCheck, MdContentCopy, MdRefresh} from "react-icons/md";
 import {CardContent, Button, InputGroup} from "@heroui/react";
 import {MethodCard} from "@/components/MethodCard";
@@ -12,7 +11,7 @@ interface Props {
     onGenerate: () => void;
 }
 
-export const CopyField = React.memo<Props>(({label, value, icon, onGenerate}) => {
+export const CopyField = memo<Props>(({label, value, icon, onGenerate}) => {
     const [copied, setCopied] = useState(false);
     const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -25,12 +24,16 @@ export const CopyField = React.memo<Props>(({label, value, icon, onGenerate}) =>
     }, []);
 
     const handleCopy = useCallback(async () => {
-        await navigator.clipboard.writeText(value);
-        setCopied(true);
-        if (timeoutRef.current) {
-            clearTimeout(timeoutRef.current);
+        try {
+            await navigator.clipboard.writeText(value);
+            setCopied(true);
+            if (timeoutRef.current) {
+                clearTimeout(timeoutRef.current);
+            }
+            timeoutRef.current = setTimeout(() => setCopied(false), 2000);
+        } catch (error) {
+            console.error("Failed to copy to clipboard:", error);
         }
-        timeoutRef.current = setTimeout(() => setCopied(false), 2000);
     }, [value]);
 
     return (

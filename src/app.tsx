@@ -1,6 +1,5 @@
-import React from "react";
+import {memo, useState, useCallback} from "react";
 import {SiTether} from "react-icons/si";
-import {useState, useCallback} from "react";
 import {FaWeixin, FaAlipay} from "react-icons/fa";
 import {CopyField} from "@/components/CopyField";
 import {QRCodeField} from "@/components/QRCodeField";
@@ -61,7 +60,7 @@ function generateAllValues(): Record<MethodId, string> {
     return Object.fromEntries(METHOD_IDS.map(id => [id, METHOD_CONFIG[id].generate()])) as Record<MethodId, string>;
 }
 
-export const App = React.memo(() => {
+export const App = memo(() => {
     const [values, setValues] = useState<Record<MethodId, string>>(generateAllValues);
 
     const handleGenerate = useCallback((id: MethodId) => {

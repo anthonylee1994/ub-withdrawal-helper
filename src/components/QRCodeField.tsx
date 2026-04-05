@@ -1,7 +1,6 @@
-import React from "react";
+import {memo, useCallback, useEffect, useRef, useState} from "react";
 import QRCode from "qrcode";
 import type {IconType} from "react-icons";
-import {useCallback, useEffect, useRef} from "react";
 import {MdDownload, MdRefresh} from "react-icons/md";
 import {CardContent, Button, ButtonGroup} from "@heroui/react";
 import {MethodCard} from "@/components/MethodCard";
@@ -14,8 +13,9 @@ interface Props {
     onGenerate: () => void;
 }
 
-export const QRCodeField = React.memo<Props>(({label, value, icon, fileName, onGenerate}) => {
+export const QRCodeField = memo<Props>(({label, value, icon, fileName, onGenerate}) => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
+    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         if (canvasRef.current) {
@@ -26,6 +26,9 @@ export const QRCodeField = React.memo<Props>(({label, value, icon, fileName, onG
                     dark: "#000000",
                     light: "#ffffff",
                 },
+            }).catch(error => {
+                console.error("Failed to generate QR code:", error);
+                setError("Failed to generate QR code");
             });
         }
     }, [value]);
@@ -43,14 +46,18 @@ export const QRCodeField = React.memo<Props>(({label, value, icon, fileName, onG
     return (
         <MethodCard label={label} icon={icon} className="gap-0">
             <CardContent className="flex flex-col items-center gap-4">
-                <canvas ref={canvasRef} />
+                {error ? (
+                    <div className="text-red-500 text-sm">{error}</div>
+                ) : (
+                    <canvas ref={canvasRef} />
+                )}
                 <div className="flex flex-wrap gap-2 justify-center">
                     <ButtonGroup>
                         <Button variant="outline" onPress={onGenerate} style={{minWidth: "6rem"}}>
                             <MdRefresh className="w-4 h-4" />
                             <span className="ml-1">Regenerate</span>
                         </Button>
-                        <Button variant="primary" onPress={download} style={{minWidth: "6rem"}}>
+                        <Button variant="primary" onPress={download} style={{minWidth: "6rem"}} isDisabled={!!error}>
                             <MdDownload className="w-4 h-4" />
                             <span className="ml-1">Download</span>
                         </Button>

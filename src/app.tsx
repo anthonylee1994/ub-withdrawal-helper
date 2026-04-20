@@ -1,4 +1,4 @@
-import {memo, useState, useCallback} from "react";
+import React from "react";
 import {SiTether} from "react-icons/si";
 import {FaWeixin, FaAlipay} from "react-icons/fa";
 import {CopyField} from "@/components/CopyField";
@@ -8,7 +8,8 @@ import {generateERC20Address} from "@/generators/erc20";
 import {generateAlipayQrUrl} from "@/generators/alipay";
 import {generateWeChatQrUrl} from "@/generators/wechat";
 import {generateBankCardNumber} from "@/generators/bankCard";
-import {generateDigitalRMBAndToPayNumber} from "@/generators/digitalRMBAndToPay";
+import {generateDigitalRMBNumber, generateToPayNumber} from "@/generators/digitalRMBAndToPay";
+import {generateKDPayAddress} from "@/generators/kdPay";
 import {MdAccountBalance, MdCurrencyExchange, MdRefresh} from "react-icons/md";
 import {Button} from "@heroui/react";
 import type {MethodId, MethodConfig} from "@/types/generators";
@@ -20,11 +21,23 @@ const METHOD_CONFIG: Record<MethodId, MethodConfig> = {
         icon: MdAccountBalance,
         generate: generateBankCardNumber,
     },
-    digitalRmbAndToPay: {
+    digitalRmb: {
         type: "copy",
-        label: "Digital RMB / ToPay",
+        label: "Digital RMB",
         icon: MdCurrencyExchange,
-        generate: generateDigitalRMBAndToPayNumber,
+        generate: generateDigitalRMBNumber,
+    },
+    toPay: {
+        type: "copy",
+        label: "ToPay",
+        icon: MdCurrencyExchange,
+        generate: generateToPayNumber,
+    },
+    kdPay: {
+        type: "copy",
+        label: "KDPay",
+        icon: MdCurrencyExchange,
+        generate: generateKDPayAddress,
     },
     trc20: {
         type: "copy",
@@ -60,14 +73,14 @@ function generateAllValues(): Record<MethodId, string> {
     return Object.fromEntries(METHOD_IDS.map(id => [id, METHOD_CONFIG[id].generate()])) as Record<MethodId, string>;
 }
 
-export const App = memo(() => {
-    const [values, setValues] = useState<Record<MethodId, string>>(generateAllValues);
+export const App = React.memo(() => {
+    const [values, setValues] = React.useState<Record<MethodId, string>>(generateAllValues);
 
-    const handleGenerate = useCallback((id: MethodId) => {
+    const handleGenerate = React.useCallback((id: MethodId) => {
         setValues(prev => ({...prev, [id]: METHOD_CONFIG[id].generate()}));
     }, []);
 
-    const handleGenerateAll = useCallback(() => {
+    const handleGenerateAll = React.useCallback(() => {
         setValues(generateAllValues());
     }, []);
 

@@ -20,4 +20,4 @@ export interface QRMethodConfig extends BaseMethodConfig {
 
 export type MethodConfig = CopyMethodConfig | QRMethodConfig;
 
-export type MethodId = "bankAccount" | "trc20" | "erc20" | "digitalRmbAndToPay" | "wechat" | "alipay";
+export type MethodId = "bankAccount" | "trc20" | "erc20" | "digitalRmb" | "toPay" | "kdPay" | "wechat" | "alipay";

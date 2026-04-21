@@ -20,7 +20,7 @@ export const QRCodeField = memo<Props>(({label, value, icon, fileName, onGenerat
     useEffect(() => {
         if (canvasRef.current) {
             QRCode.toCanvas(canvasRef.current, value, {
-                width: 150,
+                width: 100,
                 margin: 2,
                 color: {
                     dark: "#000000",
@@ -46,11 +46,7 @@ export const QRCodeField = memo<Props>(({label, value, icon, fileName, onGenerat
     return (
         <MethodCard label={label} icon={icon} className="gap-0">
             <CardContent className="flex flex-col items-center gap-4">
-                {error ? (
-                    <div className="text-red-500 text-sm">{error}</div>
-                ) : (
-                    <canvas ref={canvasRef} />
-                )}
+                {error ? <div className="text-red-500 text-sm">{error}</div> : <canvas ref={canvasRef} />}
                 <div className="flex flex-wrap gap-2 justify-center">
                     <ButtonGroup>
                         <Button variant="outline" onPress={onGenerate} style={{minWidth: "6rem"}}>

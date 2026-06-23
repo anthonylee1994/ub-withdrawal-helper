@@ -29,7 +29,7 @@ const METHOD_CONFIG: Record<MethodId, MethodConfig> = {
     },
     toPay: {
         type: "copy",
-        label: "ToPay",
+        label: "ToPay / OKPay",
         icon: MdCurrencyExchange,
         generate: generateToPayNumber,
     },
